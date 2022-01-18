@@ -1,8 +1,8 @@
 # Vertx.UIToolkit
 Improvements/additions made to UIToolkit fields.
 
-- `BetterFieldMouseDraggerExtensions`
-- `ApplyBetterFieldMouseDragger()`  
+#### `BetterFieldMouseDraggerExtensions`
+`ApplyBetterFieldMouseDragger()`  
 Provides dragging on a visual element to change a value field.  
 This dragger uses the distance travelled, not the current mouse delta to modify the values.  
 This means it can be used in combination with a field that supports rounding.  
