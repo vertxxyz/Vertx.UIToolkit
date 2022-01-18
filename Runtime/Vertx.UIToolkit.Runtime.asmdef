@@ -1,0 +1,14 @@
+{
+  "name": "Vertx.UIToolkit.Runtime",
+  "rootNamespace": "Vertx.UIToolkit",
+  "references": [],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": true,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

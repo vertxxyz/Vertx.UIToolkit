@@ -1,0 +1,14 @@
+{
+  "name": "com.vertx.uitoolkit",
+  "displayName": "UIToolkit Additions",
+  "version": "1.0.0",
+  "unity": "2021.1",
+  "description": "Improvements/additions made to UIToolkit fields.",
+  "author": {
+	"name": "Vertx",
+	"url": "https://github.com/vertxxyz"
+  },
+  "keywords": [],
+  "category": "Tools",
+  "dependencies": {}
+}
