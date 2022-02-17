@@ -1,12 +1,20 @@
 # Vertx.UIToolkit
 Improvements/additions made to UIToolkit fields.
 
-#### `BetterFieldMouseDraggerExtensions`
-`ApplyBetterFieldMouseDragger()`  
+#### `BetterFieldMouseDragger`
+`Apply()`  
 Provides dragging on a visual element to change a value field.  
 This dragger uses the distance travelled, not the current mouse delta to modify the values.  
 This means it can be used in combination with a field that supports rounding.  
 See [this](https://forum.unity.com/threads/fieldmousedragger-improvement.1225911/) forum thread for updates.  
+To use `Apply` on composite fields `T` has to be the manipulated type. Eg. for `Vector3Field` that is `float`.  
+```csharp
+BetterFieldMouseDragger<float>.Apply<Vector3Field, Vector3, FloatField>(vector3Field);
+```
+
+#### `VisualElementExtensions`
+`VisualElement.SetDisplay`  
+Sets the `display` inline style. Avoid repeatedly doing `style.display = value ? DisplayStyle.Flex : DisplayStyle.None;`.
 
 ## Installation
 

@@ -6,7 +6,7 @@ using PointerType = UnityEngine.UIElements.PointerType;
 
 namespace Vertx.UIToolkit
 {
-	public static class BetterFieldMouseDraggerExtensions
+	internal static class BetterFieldMouseDraggerExtensions
 	{
 		// private void EnableLabelDragger(bool enable)
 		private static MethodInfo _enableLabelDraggerMethod;
@@ -16,17 +16,9 @@ namespace Vertx.UIToolkit
 		private static readonly object[] falseParameter = { false };
 		private static readonly object[] trueParameter = { true };
 
-		public static void ApplyBetterFieldMouseDragger<T, TValueType, TField, TFieldValue>(this T compositeField)
-			where T : BaseCompositeField<TValueType, TField, TFieldValue>
-			where TField : TextValueField<TFieldValue>, new()
+		internal static void ApplyBetterFieldMouseDragger<TValueType>(TextValueField<TValueType> field)
 		{
-			// ReSharper disable once ConvertClosureToMethodGroup - as to not allocate.
-			compositeField.Query<TField>().ForEach(a => ApplyBetterFieldMouseDragger(a));
-		}
-
-		public static void ApplyBetterFieldMouseDragger<TValueType>(this TextValueField<TValueType> label)
-		{
-			if (label.isDelayed)
+			if (field.isDelayed)
 			{
 				Debug.LogWarning($"Sorry, {nameof(BetterFieldMouseDragger<TValueType>)} does not support delayed fields due to it being a hacky implementation.\n" +
 				          "Hopefully unity will soon fix their implementation and we can live better lives.");
@@ -35,10 +27,10 @@ namespace Vertx.UIToolkit
 			
 			_enableLabelDraggerMethod = typeof(TextValueField<TValueType>).GetMethod("EnableLabelDragger", BindingFlags.NonPublic | BindingFlags.Instance);
 			
-			EnableLabelDraggerMethod.Invoke(label, falseParameter);
+			EnableLabelDraggerMethod.Invoke(field, falseParameter);
 			var draggerField = typeof(TextValueField<TValueType>).GetField("m_Dragger", BindingFlags.NonPublic | BindingFlags.Instance);
-			draggerField!.SetValue(label, new BetterFieldMouseDragger<TValueType>(label));
-			EnableLabelDraggerMethod.Invoke(label, trueParameter);
+			draggerField!.SetValue(field, new BetterFieldMouseDragger<TValueType>(field));
+			EnableLabelDraggerMethod.Invoke(field, trueParameter);
 		}
 	}
 
@@ -49,21 +41,52 @@ namespace Vertx.UIToolkit
 	/// https://forum.unity.com/threads/fieldmousedragger-improvement.1225911/
 	/// </summary>
 	/// <description>
-	/// To create a field mouse dragger use <see cref="Vertx.UIToolkit.BetterFieldMouseDragger{T}"/>
+	/// <para>To create a field mouse dragger use <see cref="Vertx.UIToolkit.BetterFieldMouseDragger{T}.Apply{T}"/></para>
 	/// and then set the drag zone using <see cref="UnityEngine.UIElements.BaseFieldMouseDragger.SetDragZone(VisualElement)"/>
+	/// To create a field mouse dragger use <see cref="Vertx.UIToolkit.BetterFieldMouseDragger{T}"/>
 	/// </description>
 	public class BetterFieldMouseDragger<T> : BaseFieldMouseDragger
 	{
 		/// <summary>
-		/// FieldMouseDragger's constructor.
+		/// BetterFieldMouseDragger's constructor.
 		/// </summary>
 		/// <param name="drivenField">The field.</param>
-		public BetterFieldMouseDragger(IValueField<T> drivenField)
+		internal BetterFieldMouseDragger(IValueField<T> drivenField)
 		{
 			_drivenField = drivenField;
 			_dragElement = null;
 			_dragHotZone = new Rect(0, 0, -1, -1);
 			Dragging = false;
+		}
+		
+		/// <summary>
+		/// <para>
+		/// A helper for applying <see cref="BetterFieldMouseDragger{T}"/> to a composite field.
+		/// </para>
+		/// ApplyBetterFieldMouseDragger&lt;Vector3Field, Vector3, FloatField, float&gt;(); would apply to a <see cref="Vector3Field"/> for example.
+		/// </summary>
+		/// <param name="field"></param>
+		/// <typeparam name="TField">The VisualElement field the composite field contains.</typeparam>
+		public static void Apply<TField>(TField field)
+			where TField : TextValueField<T>, new() =>
+			BetterFieldMouseDraggerExtensions.ApplyBetterFieldMouseDragger(field);
+
+		/// <summary>
+		/// <para>
+		/// A helper for applying <see cref="BetterFieldMouseDragger{T}"/> to a composite field.
+		/// </para>
+		/// Apply&lt;Vector3Field, Vector3, FloatField&gt;(); would apply to a <see cref="Vector3Field"/> for example.
+		/// </summary>
+		/// <param name="compositeField">A composite field to apply an instance of BetterFieldMouseDragger to.</param>
+		/// <typeparam name="TCompositeField">The type of composite field.</typeparam>
+		/// <typeparam name="TValueType">The value type associated with the field.</typeparam>
+		/// <typeparam name="TField">The VisualElement field the composite field contains.</typeparam>
+		public static void Apply<TCompositeField, TValueType, TField>(TCompositeField compositeField)
+			where TCompositeField : BaseCompositeField<TValueType, TField, T>
+			where TField : TextValueField<T>, new()
+		{
+			// ReSharper disable once ConvertClosureToMethodGroup - as to not allocate.
+			compositeField.Query<TField>().ForEach(a => BetterFieldMouseDraggerExtensions.ApplyBetterFieldMouseDragger(a));
 		}
 
 		private readonly IValueField<T> _drivenField;
