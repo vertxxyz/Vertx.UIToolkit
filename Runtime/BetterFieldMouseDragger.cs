@@ -194,6 +194,7 @@ namespace Vertx.UIToolkit
 				return;
 			DeltaSpeed s = shiftKey ? DeltaSpeed.Fast : (altKey ? DeltaSpeed.Slow : DeltaSpeed.Normal);
 			_totalDelta += deltaPosition;
+			_totalDelta.y = 0;
 			if (_drivenField is BaseField<T> field)
 			{
 				field.SetValueWithoutNotify(StartValue);

@@ -16,6 +16,11 @@ BetterFieldMouseDragger<float>.Apply<Vector3Field, Vector3, FloatField>(vector3F
 `VisualElement.SetDisplay`  
 Sets the `display` inline style. Avoid repeatedly doing `style.display = value ? DisplayStyle.Flex : DisplayStyle.None;`.
 
+#### `FocusControllerExtensions`
+`FocusController.IsInputFieldFocused`  
+Checks whether a field that can receive input is focused.  
+
+
 ## Installation
 
 <details>
