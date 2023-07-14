@@ -141,7 +141,7 @@ namespace Vertx.UIToolkit
 			}
 			else if (_dragElement.panel.contextType == ContextType.Editor)
 			{
-				evt.PreventDefault();
+				evt.StopPropagation();
 				_dragElement.CapturePointer(evt.pointerId);
 				ProcessDownEvent(evt);
 			}

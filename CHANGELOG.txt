@@ -4,14 +4,24 @@ All notable changes to this package will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.3.0]
+- Added IStyle extensions: SetBorderWidth, SetBorderColor, SetBorderRadius
+
+## [1.2.1]
+- Added a context type to IsInputFieldFocused to query whether numerical or text fields are focused.
+
+## [1.2.0]
+- Added InspectorElementQuery
+    PropertyFields can be queried from the root of a InspectorElement.FillDefaultInspector, and a callback is fired when initialised.
+
 ## [1.1.1]
- - Removed BetterFieldMouseDragger's y axis to avoid glitchiness associated with Unity's dodgy implementation.
- - Added FocusController.IsInputFieldFocused
+- Removed BetterFieldMouseDragger's y axis to avoid glitchiness associated with Unity's dodgy implementation.
+- Added FocusController.IsInputFieldFocused
 
 ## [1.1.0]
- - ApplyBetterFieldMouseDragger has moved to BetterFieldMouseDragger<T>.Apply(field). The extension method was being too liberally applied.
-   To use Apply on composite fields T has to be the manipulated type. Eg. for Vector3Field that is float.
- - Added VisualElement.SetDisplay to avoid repeatedly doing style.display = value ? DisplayStyle.Flex : DisplayStyle.None;
+- ApplyBetterFieldMouseDragger has moved to BetterFieldMouseDragger<T>.Apply(field). The extension method was being too liberally applied.
+    To use Apply on composite fields T has to be the manipulated type. Eg. for Vector3Field that is float.
+- Added VisualElement.SetDisplay to avoid repeatedly doing style.display = value ? DisplayStyle.Flex : DisplayStyle.None;
 
 ## [1.0.0]
- - Initial release.
+- Initial release.
