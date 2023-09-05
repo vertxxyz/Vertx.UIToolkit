@@ -8,6 +8,14 @@ namespace Vertx.UIToolkit
 	/// </summary>
 	public static class StyleExtensions
 	{
+		public static void SetBackground(this IStyle style, Sprite sprite) => style.backgroundImage = new StyleBackground(sprite);
+		
+		public static void SetBackground(this IStyle style, Texture2D texture) => style.backgroundImage = new StyleBackground(texture);
+		
+		public static void SetBackground(this IStyle style, VectorImage image) => style.backgroundImage = new StyleBackground(image);
+		
+		public static void SetBackground(this IStyle style, Color color) => style.backgroundColor = color;
+
 		public static void SetSize(this IStyle style, StyleLength width, StyleLength height)
 		{
 			style.width = width;
